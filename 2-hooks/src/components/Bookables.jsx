@@ -5,12 +5,17 @@ export default function Bookables() {
     console.log(bookables) // verifica se chama os conteudos do ficheiro .json
 
     const [bookableIndex, setBookableIndex] = useState(0);
+    const [group, setGroup] = useState("Rooms");
+    const [hasDetails, setHasDetails] = useState(true);
+    // useReducer(); // serve para retirar de todos os states um unico valor;
     
-    const group = "Rooms";
-
     const bookablesInGroup = bookables.filter( b => b.group === group);
+
+    const bookable = bookablesInGroup[bookableIndex];
     
-    const nextBookable = _ => {
+    const groups = [...new Set(bookables.map((b) => b.group))];
+
+    const nextBookable = (_) => {
         // setBookableIndex ( (bookableIndex + 1) % bookablesInGroup.length);
         setBookableIndex (index => (index + 1) % bookablesInGroup.length);
         // a delegar a responsabilidade de atuclização do state ao react;
@@ -29,24 +34,62 @@ export default function Bookables() {
     ))
     */
 
+    const changeGroup = (e) => {
+        setBookableIndex(0);
+        setGroup(e.target.value);
+    }
+
   return (
-    <div>
-        <ul className='bookables'>
-            {
-                // podemos fazer a lógica dentro da view:
-                bookablesInGroup.map( (b, i) => (
-                    <li key={b.id}
-                        className={i === bookableIndex ? "selected" : null}
-                        onClick={ () => setBookableIndex(i)}>
-                        {b.title}
-                    </li>
-                ))
-            }
-        </ul>
+    <>
+        <div>
+            <select value="group" onChange={changeGroup}>
+                {groups.map((g, i) => (
+                    <option key={i}> {g} </option>
+                ))}
+            </select>
+            <ul className='bookables'>
+                {
+                    // podemos fazer a lógica dentro da view:
+                    bookablesInGroup.map( (b, i) => (
+                        <li key={b.id}
+                            className={i === bookableIndex ? "selected" : null}
+                            onClick={ () => setBookableIndex(i)}>
+                            {b.title}
+                        </li>
+                    ))
+                }
+            </ul>
 
         <nav>
             <button autoFocus onClick={nextBookable}>Next</button>
         </nav>
+
+        <div>
+            {bookable && (
+                <>
+                    <p>
+                        <label htmlFor="details">ShowDetails</label>
+                        <input 
+                            type="checkbox"
+                            id='details'
+                            checked={hasDetails}
+                            onChange={(e) => setHasDetails(e.target.checked)} 
+                        />
+                    </p>
+
+                    {
+                        //conditional rendering
+                        hasDetails && (
+                            <article>
+                                <h2> {bookable.title}</h2>
+                                <p> {bookable.notes}</p>
+                            </article>
+                        )
+                    }
+                </>
+            )}
+        </div>        
     </div>
-  )
+    </>
+  );
 }
