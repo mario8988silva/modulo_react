@@ -17,7 +17,7 @@ export default function Bookables() {
 
     const nextBookable = (_) => {
         // setBookableIndex ( (bookableIndex + 1) % bookablesInGroup.length);
-        setBookableIndex (index => (index + 1) % bookablesInGroup.length);
+        setBookableIndex ((index) => (index + 1) % bookablesInGroup.length);
         // a delegar a responsabilidade de atuclização do state ao react;
         /* resto zero:
             0 / 4 = 0, resto zero;
@@ -42,27 +42,28 @@ export default function Bookables() {
   return (
     <>
         <div>
-            <select value="group" onChange={changeGroup}>
+            <select value={group} onChange={changeGroup}>
                 {groups.map((g, i) => (
                     <option key={i}> {g} </option>
                 ))}
             </select>
-            <ul className='bookables'>
+            <ul className="bookables">
                 {
                     // podemos fazer a lógica dentro da view:
                     bookablesInGroup.map( (b, i) => (
-                        <li key={b.id}
+                        <li 
+                            key={b.id}
                             className={i === bookableIndex ? "selected" : null}
-                            onClick={ () => setBookableIndex(i)}>
-                            {b.title}
+                            onClick={ () => setBookableIndex(i)}
+                        >
+                        {b.title}
                         </li>
-                    ))
-                }
+                    ))}
             </ul>
 
-        <nav>
+        <p>
             <button autoFocus onClick={nextBookable}>Next</button>
-        </nav>
+        </p>
 
         <div>
             {bookable && (
