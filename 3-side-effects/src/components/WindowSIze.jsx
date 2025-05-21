@@ -1,4 +1,5 @@
 import React from "react";
+import React, { useEffect} from 'react';
 import { useState } from "react"
 
 export default function WindowSize(){
@@ -11,6 +12,23 @@ export default function WindowSize(){
             height: window.innerHeight,
         }
     }
+
+    useEffect(() => {
+
+        console-log(size.width);
+        
+        window.addEventListener('resize', handleResize, false);
+
+        function handleResize(){
+            setSize(getSize());
+        }
+
+        return () => { // cleanup function,  e é sempre executada antes da componente ser destruída e antes de cada render da componente
+            window.removeEventListener('resize', handleResize, false);
+        }
+    }, []); // array de dependencias vazia; só é executado no inicio da construcção da componente;
+    // array de dependencias do Effect, que define quando é executado o meu effect;
+
 
     return (
         <>
