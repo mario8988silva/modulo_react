@@ -1,6 +1,6 @@
 import BookList from "./BookList";
 //import {books} from "../data.json"; //chama lista interna
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function BookDashboard() {
 
@@ -10,15 +10,23 @@ export default function BookDashboard() {
 
     const [livros, setLivros] = useState([]);
 
+    /* useEffect(() => {
+
+        fetch('https://my-json-server.typicode.com/JoaoGoncalves/biblio-api/books')
+            .then(resp => resp.json())
+            .then( data => setLivros(data))
+            .catch( ()=> console.log('ocorreu um erro'));
+      
+    }, [])  */
     useEffect(() => {
 
         (async () => {
-            let response = await fetch ('https://my-json-server.typicode.com/JoaoGoncalves/biblio-api/books');
+            let response = await fetch('https://my-json-server.typicode.com/JoaoGoncalves/biblio-api/books');
             let data = await response.json();
             setLivros(data);
         })();
-    }, [] );
 
+    }, [])
 
     // aqui é feita a funcionalidade para eliminar livros, não recorrendo directamente à lista, mas a "livros", que faz um clone desta lista, e é este o clone que iteramos
     const handleDeleteBook = (id) => {
