@@ -1,7 +1,8 @@
 import './App.css'
 import SayHello from './components/SayHello'
 import WindowSize from './components/WindowSize'
-import UsingLocalStorage from './components/UsingLocalStorage'
+import UsingLocalStorage from './components/UsingLocalStorage.jsx'
+import UserList from './components/UserList.jsx'
 
 
 function App() {  

@@ -11,6 +11,7 @@ export default function UsingLocalStorage() {
     */
     
     const [user, setUser] = useState('');
+    const [xpto, setXpto] = useState('xpto state')
 
     useEffect(() => {
         //inicio na construcção da componente, verificar se tenho um user guardado;
@@ -20,10 +21,10 @@ export default function UsingLocalStorage() {
         if(storedUser){
             setUser(storedUser);
         }
-    }, [])
+    }, [] )
 
     useEffect(() => {
-        localStorage, setItem('user', user);
+        localStorage.setItem('user', user);
         console.log('user: ', user);
     }, [user])
 
@@ -31,11 +32,10 @@ export default function UsingLocalStorage() {
         console.log('Chamado effect....');
     })
 
-
     return (
         <>
             <h1>Using Dependencies in Effect</h1>
-            <select value={user} onChange={(evt) => setUser(evt.target.value)}>
+            <select value={user} onChange={ (evt) => setUser(evt.target.value) }>
                 <option>Joao</option>
                 <option>Maria</option>
                 <option>Joana</option>
@@ -43,8 +43,7 @@ export default function UsingLocalStorage() {
                 <option>Pedro</option>
                 <option>Ines</option>
             </select> <br />
-            <button onClick={() => setXpto ('alterado')}> {xptio} </button>
-        </>       
-
+            <button onClick={ () => setXpto ('alterado')}> {xpto} </button>
+        </>
     );
 }

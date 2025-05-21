@@ -1,21 +1,22 @@
-import { use, useEffect } from "react";
+import {useEffect, useState } from "react";
 
 export default function UserList() {
     
-    console[UserList, setUsers] = useState([]);
+    const [users, setUsers] = useState([]);
 /*
     useEffect(() => {
 
-        fetch('')
+        fetch('https://my-json-server.typicode.com/JoaoGoncalves/bookables/users')
             .then(resp => resp.json())
             .then( data => setUsers(data))
-            .catch( () => console.log('ocorreu um erro'));
-
-    }, []) //apenas no inicio da construcção da componente
+            .catch( ()=> console.log('ocorreu um erro'));
+      
+    }, []) // somente no inicio da construcao da componente
 */
-    useEffect(() => {
+
+    useEffect( () => {
         (async () => {
-            let response = await fetch ('https://my-json-server.typicode.com/JoaoGoncalves/biblio-api/books');
+            let response = await fetch ('https://my-json-server.typicode.com/JoaoGoncalves/bookables/users');
             let data = await response.json();
             setUsers(data);
         })();
@@ -24,7 +25,7 @@ export default function UserList() {
     if( users.length > 0){
         return (
             <ul>
-                {user.map(u => (
+                {users.map( u => (
                     <li key={u.id}>{u.name}</li>
                 ))}
             </ul>
